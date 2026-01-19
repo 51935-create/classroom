@@ -1,0 +1,243 @@
+/* === 1. พื้นฐาน & Reset === */
+body { 
+    font-family: 'Sarabun', sans-serif; 
+    background-color: #f4f4f9; 
+    margin: 0; 
+    padding: 0;
+    /* ป้องกันการเด้งของหน้าจอใน iOS */
+    -webkit-text-size-adjust: 100%; 
+}
+
+.hidden { display: none !important; }
+
+/* จัดกึ่งกลาง (Login) */
+.center-screen { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* === 2. Login Card === */
+.card { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+    text-align: center; 
+    width: 100%; 
+    max-width: 350px; /* จำกัดความกว้างไม่ให้ใหญ่เกินใน iPad */
+}
+
+input, textarea { 
+    width: 100%; 
+    padding: 12px; /* เพิ่มพื้นที่สัมผัส */
+    margin: 10px 0; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-size: 16px; /* ป้องกัน iOS ซูมตอนพิมพ์ */
+}
+.error { color: red; font-size: 0.9em; margin-top: 5px;}
+
+/* === 3. Header & Toolbar === */
+header { 
+    background: #2c3e50; 
+    color: white; 
+    padding: 15px 20px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; /* ให้ตกบรรทัดได้ถ้าจอเล็ก */
+    gap: 10px;
+    position: sticky; top: 0; z-index: 100; /* ตรึงเมนูไว้บนสุด */
+}
+
+.brand { font-size: 1.2em; font-weight: bold; }
+
+.user-info { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+
+.badge { background: #f1c40f; color: #333; padding: 3px 10px; border-radius: 12px; font-size: 0.85em; font-weight: bold;}
+
+.toolbar { 
+    padding: 10px 20px; 
+    background: white; 
+    border-bottom: 1px solid #ddd; 
+    display: flex; 
+    gap: 10px; 
+    overflow-x: auto; /* เผื่อปุ่มล้นจอในมือถือ */
+    white-space: nowrap;
+}
+
+/* === 4. Board Layout (หัวใจสำคัญ) === */
+.board-container { 
+    display: flex; 
+    overflow-x: auto; 
+    padding: 20px; 
+    height: calc(100vh - 150px); /* ความสูงเต็มจอ */
+    align-items: flex-start; 
+    gap: 20px; 
+    
+    /* Scroll ลื่นๆ บนมือถือ */
+    -webkit-overflow-scrolling: touch; 
+    scroll-behavior: smooth;
+}
+
+/* คอลัมน์วิชา */
+.column { 
+    background: #dfe6e9; 
+    min-width: 300px; 
+    max-width: 300px; 
+    border-radius: 10px; 
+    padding: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    max-height: 100%; 
+}
+
+.column-header { 
+    font-weight: bold; 
+    margin-bottom: 10px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    font-size: 1.1em;
+    padding: 0 5px;
+}
+
+.task-list { 
+    overflow-y: auto; 
+    flex-grow: 1; 
+    padding-right: 5px; 
+    padding-bottom: 10px;
+}
+
+/* === 5. Task Card === */
+.task-card { 
+    padding: 15px; 
+    margin-bottom: 12px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    position: relative;
+    border-left: 6px solid transparent; 
+}
+
+/* Color Themes */
+.bg-white  { background: #ffffff; border-left-color: #bdc3c7; }
+.bg-gray   { background: #f1f2f6; border-left-color: #7f8c8d; }
+.bg-red    { background: #ffcccc; border-left-color: #e74c3c; }
+.bg-yellow { background: #fff9c4; border-left-color: #f1c40f; }
+.bg-green  { background: #dcedc8; border-left-color: #2ecc71; }
+
+.task-title { font-weight: bold; color: #2c3e50; font-size: 1.1em; margin-bottom: 5px; }
+.task-desc { font-size: 0.95em; color: #555; margin-bottom: 12px; white-space: pre-wrap; line-height: 1.4;}
+.status-section { margin-top: 10px; font-size: 0.85em; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.1); color: #666;}
+.pending-list { color: #c0392b; font-weight: bold;}
+
+/* === 6. Buttons === */
+button { 
+    cursor: pointer; border: none; border-radius: 6px; 
+    font-family: inherit; transition: 0.2s; font-size: 14px;
+    /* ป้องกันการแตะแล้วเกิดไฮไลท์สีฟ้าในมือถือ */
+    -webkit-tap-highlight-color: transparent;
+}
+.btn-primary { background: #3498db; color: white; padding: 10px 15px; }
+.btn-secondary { background: #95a5a6; color: white; padding: 10px 15px; }
+.btn-danger { background: #e74c3c; color: white; padding: 10px 15px; }
+.btn-warning { background: #f39c12; color: white; padding: 6px 12px; }
+.btn-logout { background: #c0392b; color: white; padding: 6px 12px; }
+.btn-cancel { background: #bdc3c7; color: #333; padding: 10px 15px; }
+
+/* ปุ่มส่งงาน (ทำให้ใหญ่กดง่าย) */
+.btn-submit { 
+    width: 100%; padding: 12px; margin-top: 5px; 
+    font-weight: bold; border-radius: 8px; font-size: 1em;
+}
+.btn-submit.done { background: #27ae60; color: white; }
+.btn-submit.not-done { background: white; color: #7f8c8d; border: 1px solid #bdc3c7;}
+
+/* ปุ่มเล็กๆ (Edit/Delete) */
+.card-actions { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 8px; }
+.icon-btn { 
+    background: rgba(255,255,255,0.8); color: #555; 
+    font-size: 0.9em; padding: 5px 10px; border-radius: 4px; border: 1px solid #eee;
+}
+.add-task-btn { 
+    width: 100%; background: rgba(255,255,255,0.5); 
+    border: 2px dashed #b2bec3; padding: 12px; 
+    color: #636e72; margin-top: 10px; border-radius: 8px;
+}
+
+/* === 7. Color Picker === */
+.color-options { display: flex; gap: 12px; margin: 15px 0; justify-content: center;}
+.color-circle { width: 40px; height: 40px; border-radius: 50%; border: 3px solid #eee; } /* ใหญ่ขึ้น */
+.color-circle.selected { border: 3px solid #333; transform: scale(1.1); }
+
+/* === 8. Modal === */
+.modal { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); /* เบลอฉากหลัง */
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 2000; animation: fadeIn 0.2s ease-out; padding: 20px; box-sizing: border-box;
+}
+
+.modal-content { 
+    background: white; width: 100%; max-width: 400px; 
+    padding: 25px; border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+    max-height: 90vh; overflow-y: auto; /* กันล้นจอแนวตั้ง */
+}
+.modal-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ========================================= */
+/* === RESPONSIVE DESIGN (สำหรับมือถือ) === */
+/* ========================================= */
+
+@media (max-width: 768px) {
+    /* ปรับ Header */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .user-info { width: 100%; justify-content: space-between; margin-top: 5px;}
+    
+    /* Toolbar (ปุ่ม Admin) */
+    .toolbar { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px;}
+    .toolbar button { white-space: nowrap; }
+
+    /* ปรับกระดานเป็นแนวตั้ง (Vertical Stack) */
+    .board-container {
+        flex-direction: column; /* เรียงลงมาแทนเรียงขวา */
+        height: auto; /* ปล่อยความสูงอิสระ */
+        overflow-y: visible; /* ให้เลื่อนหน้าจอหลักเอา */
+        overflow-x: hidden;
+        align-items: center; /* จัดกลาง */
+        padding: 15px;
+    }
+
+    /* ขยายคอลัมน์ให้เต็มจอมือถือ */
+    .column {
+        min-width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        height: auto; /* ความสูงตามเนื้อหา */
+        max-height: 600px; /* จำกัดความสูงไม่ให้ยาวเกินไปในแต่ละวิชา */
+    }
+
+    /* Modal เต็มจอมือถือ */
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .card-actions .icon-btn { padding: 8px 12px; } /* ปุ่มลบ/แก้ไข ใหญ่ขึ้น */
+}
